@@ -102,7 +102,7 @@ func workerApp() error {
 		if update.Message.LeftChatMember != nil {
 			leftChatMember := update.Message.LeftChatMember
 			chatMember := chatMemberDAO.GetByFilter(update.Message.Chat.ID, int64(leftChatMember.ID))
-			if chatMember.ID <= 0 {
+			if chatMember.ID > 0 {
 				chatMember, err = chatMemberDAO.Delete(chatMember, nil)
 				if err != nil {
 					log.Println(err)
@@ -136,7 +136,7 @@ func serviceApp() error {
 			}
 			c.JSON(http.StatusOK, result)
 		})
-		index.GET("/chat_member", func(c *gin.Context) {
+		index.GET("/chat-member", func(c *gin.Context) {
 			chatID, _ := strconv.ParseInt(c.Query("chat_id"), 10, 64)
 			userName := c.Query("user_name")
 			chatMember := chatMemberDAO.GetByUserName(chatID, userName)
