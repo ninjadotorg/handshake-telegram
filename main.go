@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -90,7 +91,7 @@ func workerApp() error {
 				chatMember = models.ChatMember{}
 				chatMember.ChatID = update.Message.Chat.ID
 				chatMember.UserID = int64(newChatMember.ID)
-				chatMember.UserName = newChatMember.UserName
+				chatMember.UserName = strings.ToLower(newChatMember.UserName)
 				chatMember.FirstName = newChatMember.FirstName
 				chatMember.LastName = newChatMember.LastName
 				chatMember, err = chatMemberDAO.Create(chatMember, nil)

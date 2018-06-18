@@ -2,6 +2,7 @@ package dao
 
 import (
 	"log"
+	"strings"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -30,6 +31,8 @@ func (chatMemberDao ChatMemberDao) GetByFilter(chatID int64, userID int64) model
 }
 
 func (chatMemberDao ChatMemberDao) GetByUserName(chatID int64, userName string) models.ChatMember {
+	userName = strings.Trim(strings.ToLower(userName), " ")
+
 	dto := models.ChatMember{}
 	err := models.Database().Where("chat_id = ? AND user_name = ?", chatID, userName).First(&dto).Error
 	if err != nil {
