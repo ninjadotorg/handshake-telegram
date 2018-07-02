@@ -98,6 +98,14 @@ func workerApp() error {
 				if err != nil {
 					log.Println(err)
 				}
+			} else {
+				chatMember.UserName = strings.ToLower(newChatMember.UserName)
+				chatMember.FirstName = newChatMember.FirstName
+				chatMember.LastName = newChatMember.LastName
+				chatMember, err = chatMemberDAO.Update(chatMember, nil)
+				if err != nil {
+					log.Println(err)
+				}
 			}
 		}
 		if update.Message.LeftChatMember != nil {
